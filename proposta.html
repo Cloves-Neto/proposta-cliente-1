@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Proposta de Serviços</title>
+    <style>
+        :root {
+            --laranja: #ff8a00;
+            --roxo: #6a1b9a;
+            --amarelo: #ffd54f;
+            --magenta: #d81b60;
+            --ciano: #00acc1;
+            --cinza: #f5f5f5;
+            --texto: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: white;
+            color: var(--texto);
+            padding: 32px;
+        }
+
+        h1 {
+            color: var(--roxo);
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: var(--laranja);
+        }
+
+        p {
+            line-height: 1.6;
+            max-width: 900px;
+        }
+
+        .card {
+            background: var(--cinza);
+            border-left: 6px solid var(--ciano);
+            padding: 24px;
+            margin-top: 24px;
+            border-radius: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .tag.start {
+            background: var(--laranja);
+        }
+
+        .tag.avulso {
+            background: var(--magenta);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        th {
+            background: var(--roxo);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--roxo);
+        }
+
+        .total {
+            background: var(--amarelo);
+            font-weight: bold;
+        }
+
+        .info {
+            background: #e0f7fa;
+            border-left: 6px solid var(--ciano);
+            padding: 20px;
+            margin-top: 32px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Proposta de Serviços</h1>
+    <p>
+        Abaixo estão as <strong>duas formas possíveis de contratação</strong>.
+        As opções foram separadas para facilitar a comparação e evitar confusão
+        entre valores iniciais, parcelamentos e mensalidades.
+    </p>
+
+    <!-- OPÇÃO 1 -->
+    <div class="card">
+        <span class="tag start">OPÇÃO 1 — PLANO START</span>
+        <h2>Plano Start + Redes Sociais</h2>
+
+        <p>
+            Nesta opção, o custo inicial é reduzido e parte do valor do site
+            é diluída em um plano mensal com suporte contínuo.
+        </p>
+
+        <table>
+            <tr>
+                <th>Serviço</th>
+                <th>Valor</th>
+            </tr>
+            <tr>
+                <td>Plano Start (suporte)</td>
+                <td>R$ 250,00 ( por mês )</td>
+            </tr>
+            <tr>
+                <td>Plano Start (setup do site)</td>
+                <td>R$ 1.250,00 (1x)</td>
+            </tr>
+            <tr>
+                <td>Branding (serviço avulso)</td>
+                <td>R$ 650,00 (1x)</td>
+            </tr>
+            <tr>
+                <td>Plano Essencial de Redes Sociais</td>
+                <td>R$ 950,00 / mês</td>
+            </tr>
+
+            <tr class="total">
+                <td>Total mensal</td>
+                <td>R$ 1.200,00 / mês + valor do parcelamento</td>
+            </tr>
+        </table>
+
+        <p class="highlight">
+            Entrada para iniciar: 30% de Site Setup (R$ 1250) + Branding (R$ 650)
+            <br />
+            Total de entrada: R$ 570,00
+            Valor restante: R$ 1.330,00
+        </p>
+
+        <p>
+             O valor restante pode ser parcelado em até <strong>4x sem juros</strong> OU <strong>12x com juros de
+                1,57% ao mês</strong>.
+            A mensalidade começa após a entrega do projeto ou após 30 dias da assinatura do contrato.
+        </p>
+    </div>
+
+    <!-- OPÇÃO 2 -->
+    <div class="card">
+        <span class="tag avulso">OPÇÃO 2 — SERVIÇOS AVULSOS</span>
+        <h2>Site fora do plano (sem suporte mensal)</h2>
+
+        <p>
+            Nesta opção, não existe mensalidade de suporte.
+            O site é desenvolvido, publicado e entregue ao cliente.
+        </p>
+
+        <table>
+            <tr>
+                <th>Serviço</th>
+                <th>Valor</th>
+            </tr>
+            <tr>
+                <td>Desenvolvimento do site</td>
+                <td>R$ 1.500,00 (1x)</td>
+            </tr>
+            <tr>
+                <td>Branding</td>
+                <td>R$ 650,00 (1x)</td>
+            </tr>
+            <tr>
+                <td>Plano Essencial de Redes Sociais</td>
+                <td>R$ 950,00 / mês</td>
+            </tr>
+            <tr class="total">
+                <td>Total mensal</td>
+                <td>R$ 950,00 / mês + valor do parcelamento</td>
+            </tr>
+        </table>
+
+        <p class="highlight">
+            Entrada para iniciar: 30% de (R$ 1500) + Branding (R$ 650)
+            <br />
+            Total de entrada: R$ R$645,00
+            Valor restante: R$ 1.505,00
+        </p>
+
+        <p>
+            O valor restante pode ser parcelado em até
+            <strong>6x sem juros</strong> ou <strong>12x com juros de 1,57% ao mês</strong>.
+            Nesta opção, o custo mensal é menor por não haver suporte.
+        </p>
+    </div>
+
+    <div class="info">
+        <strong>Domínio e Hospedagem:</strong><br />
+        O Domínio (nome do site) e a hospedagem são por nossa conta e responsabilidade, sem nenhum custo adicional.
+        Se o cliente já possui um domínio ou hospedagem própria, precisará disponibilizar o acesso às informações para a
+        configuração do projeto.
+        <br /><br />
+        <strong>Propriedade Intelectual:</strong><br />
+        Todo o site e materiais desenvolvidos são propriedade do cliente.
+        Caso queira transferir hospedagem ou solicitar os arquivos,
+        entregamos tudo sem impedimentos.
+    </div>
+
+</body>
+
+</html>

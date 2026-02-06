@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Arte Digital | [Nome do Artista]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #8B4513;
+            --accent-color: #D4AF37;
+            --bg-light: #FAF9F6;
+            --bg-white: #FFFFFF;
+            --text-dark: #121212;
+            --text-light: #555555;
+            --border-color: #e0e0e0;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            font-family: var(--font-sans);
+        }
+
+        /* Utilities */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-1 {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .mb-2 {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .mb-3 {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            border: 1px solid var(--primary-color);
+            cursor: pointer;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-trigger {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary-color);
+            color: #fff;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .cart-badge.visible {
+            opacity: 1;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #fdfbf7 0%, #fff 100%);
+            padding-top: 80px;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 90%;
+        }
+
+        .hero-img {
+            position: relative;
+            height: 80vh;
+            width: 100%;
+            background-image: url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-top-left-radius: 200px;
+        }
+
+        /* Highlights (Diferenciais) */
+        .highlights {
+            background: var(--bg-white);
+            padding: var(--spacing-lg) 0;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .highlight-item {
+            text-align: center;
+            padding: 2rem;
+            transition: var(--transition);
+        }
+
+        .highlight-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            background: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+
+        /* Carousel Section */
+        .carousel-section {
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            color: #fff;
+            padding: var(--spacing-lg) 0;
+        }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            flex: 0 0 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .carousel-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .carousel-controls {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+
+        .carousel-dot.active {
+            background: #fff;
+        }
+
+        /* About (Split) */
+        .scrolly-section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .split-layout.reverse {
+            direction: rtl;
+        }
+
+        .split-layout.reverse .split-content {
+            direction: ltr;
+        }
+
+        .split-img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            box-shadow: 20px 20px 0 var(--bg-light);
+        }
+
+        .split-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .split-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Portfolio */
+        .portfolio-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: var(--text-light);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .filter-btn.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .filter-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .artwork-card {
+            background: var(--bg-white);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .artwork-card:hover .artwork-img {
+            transform: scale(1.05);
+        }
+
+        .img-wrapper {
+            overflow: hidden;
+            height: 350px;
+            position: relative;
+        }
+
+        .artwork-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .card-details {
+            padding: 1.5rem;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-price {
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .artwork-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .artwork-card:hover .artwork-overlay {
+            opacity: 1;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .page-btn.active {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .page-btn:hover:not(.active) {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Contact */
+        .contact-section {
+            background: var(--bg-white);
+            position: relative;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: stretch;
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-light);
+            font-family: var(--font-sans);
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: #111;
+            color: #fff;
+            padding: 4rem 0 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-family: var(--font-serif);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #888;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: #fff;
+            max-width: 900px;
+            margin: 2rem auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+
+            .hero-layout,
+            .split-layout,
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-img {
+                border-radius: 0;
+                height: 50vh;
+                order: -1;
+            }
+
+            .hero {
+                height: auto;
+                padding-bottom: 2rem;
+            }
+
+            .split-layout.reverse {
+                direction: ltr;
+            }
+
+            .header-content .nav-links {
+                display: none;
+            }
+
+            /* Mobile Menu Placeholder */
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">Studio<span>Arte</span></a>
+            <nav class="nav-links">
+                <a href="#home">Início</a>
+                <a href="#about">Sobre</a>
+                <a href="#studio">O Studio</a>
+                <a href="#portfolio">Portfólio</a>
+                <a href="#contact">Contato</a>
+            </nav>
+            <div class="header-icons">
+                <div class="cart-trigger" onclick="openCart()">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="container hero-layout">
+            <div class="hero-text">
+                <h1>A Essência da Arte em Formas Digitais</h1>
+                <p>Descubra obras exclusivas que transcendem o comum. Uma coleção curada para colecionadores exigentes e
+                    amantes da estética contemporânea.</p>
+                <a href="#portfolio" class="btn">Explorar Coleção</a>
+            </div>
+            <div class="hero-img"></div>
+        </div>
+    </section>
+
+    <!-- Highlights -->
+    <section class="highlights">
+        <div class="container">
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="icon-box"><i class="fas fa-certificate"></i></div>
+                    <h3>Autenticidade Garantida</h3>
+                    <p>Cada obra acompanha certificado de autenticidade assinado e numerado pelo artista.</p>
+                </div>
+                <div class="highlight-item">
+                    <div class="icon-box"><i class="fas fa-gem"></i></div>
+                    <h3>Curadoria Exclusiva</h3>
+                    <p>Peças únicas e séries limitadas desenvolvidas com rigor técnico e conceitual.</p>
+                </div>
+                <div class="highlight-item">
+                    <div class="icon-box"><i class="fas fa-shipping-fast"></i></div>
+                    <h3>Envio Seguro</h3>
+                    <p>Embalagens especiais e seguro total para que sua obra chegue perfeita em qualquer lugar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel (News/Promo) -->
+    <section class="carousel-section">
+        <div class="carousel-container" id="carouselTrack">
+            <div class="carousel-slide">
+                <div class="carousel-content">
+                    <h3>Nova Coleção "Ethereal" Disponível</h3>
+                    <p>Mergulhe nas cores do invisível. Disponível apenas este mês.</p>
+                    <a href="#portfolio" class="btn btn-outline"
+                        style="margin-top: 1rem; border-color: #fff; color: #fff;">Ver Agora</a>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="carousel-content">
+                    <h3>Frete Grátis para Todo o Brasil</h3>
+                    <p>Na compra de qualquer obra digital impressa acima de R$ 2.000.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="carousel-content">
+                    <h3>Exposição Internacional 2024</h3>
+                    <p>Nossas obras estarão presentes na Bienal de Arte Digital em Nova York.</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls" id="carouselDots">
+            <!-- JS Generated -->
+        </div>
+    </section>
+
+    <!-- About Me -->
+    <section class="scrolly-section" id="about">
+        <div class="container">
+            <div class="split-layout">
+                <div class="split-content">
+                    <h2>A Jornada do Pincel ao Pixel</h2>
+                    <p>Minha história começou aos 12 anos, quando ganhei meu primeiro conjunto de tintas a óleo. Desde
+                        então, a arte deixou de ser um hobby para se tornar minha forma de respirar. Passei anos
+                        explorando telas, texturas e cores, até que o universo digital abriu portas que jamais imaginei.
+                    </p>
+                    <p>Hoje, mesclo a sensibilidade das técnicas tradicionais com a infinita possibilidade do digital.
+                        Cada obra é uma ponte entre mundos: o tátil e o virtual, o clássico e o contemporâneo. Meu
+                        trabalho já foi exposto em galerias de São Paulo, Paris, Tóquio e Nova York.</p>
+                    <p><em>"A arte não imita a vida. Ela a reinventa."</em></p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=2080&auto=format&fit=crop"
+                    class="split-img" alt="Artista pintando em seu ateliê">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Studio -->
+    <section class="scrolly-section" id="studio" style="background: var(--bg-white);">
+        <div class="container">
+            <div class="split-layout reverse">
+                <div class="split-content">
+                    <h2>O Espaço Onde a Magia Acontece</h2>
+                    <p>Mais do que um studio, este é um santuário criativo. Paredes brancas que refletem a luz natural,
+                        prateleiras repletas de pigmentos, pincéis de todas as épocas e monitores de alta fidelidade
+                        cromática convivem em harmonia.</p>
+                    <p>Aqui, cada detalhe foi pensado para estimular a criação: desde o silêncio necessário para a
+                        concentração até a música ambiente que embala as sessões mais intensas. É neste ambiente que as
+                        ideias ganham forma, cor e vida.</p>
+                    <p>O studio também funciona como galeria privada, recebendo colecionadores e entusiastas que desejam
+                        conhecer o processo por trás de cada obra. <strong>Visitas mediante agendamento.</strong></p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?q=80&w=2070&auto=format&fit=crop"
+                    class="split-img" alt="Galeria de arte com obras expostas">
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="section" id="portfolio">
+        <div class="container">
+            <div class="portfolio-header">
+                <h2>C acervo Selecionado</h2>
+                <p>Explore as obras disponíveis para aquisição.</p>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterGallery('all')">Todas</button>
+                <button class="filter-btn" onclick="filterGallery('digital')">Digital</button>
+                <button class="filter-btn" onclick="filterGallery('print')">Prints</button>
+                <button class="filter-btn" onclick="filterGallery('available')">Disponíveis</button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- JS Generated -->
+            </div>
+
+            <div class="pagination" id="pagination">
+                <!-- JS Generated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact-section" id="contact">
+        <div class="container">
+            <div class="contact-layout">
+                <div class="contact-info" style="display: flex; flex-direction: column;">
+                    <div>
+                        <h2>Vamos Conversar</h2>
+                        <p class="mb-2">Interessado em uma peça personalizada ou tem dúvidas sobre o processo de
+                            aquisição?
+                            Entre em contato.</p>
+
+                        <div class="icon-box"
+                            style="margin: 0; width: 50px; height: 50px; font-size: 1.2rem; display: inline-flex;">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span style="vertical-align: super; margin-left: 10px;">contato@studioarte.com</span>
+                        <br><br>
+                        <div class="icon-box"
+                            style="margin: 0; width: 50px; height: 50px; font-size: 1.2rem; display: inline-flex;">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <span style="vertical-align: super; margin-left: 10px;">+55 (11) 99999-9999</span>
+                    </div>
+
+                    <!-- CTA Card with Van Gogh Background -->
+                    <div
+                        style="margin-top: 2rem; position: relative; padding: 2.5rem 2rem; text-align: center; overflow: hidden; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                        <!-- Background Image with Overlay -->
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                                    background-image: url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=2000&auto=format&fit=crop');
+                                    background-size: cover; background-position: center;
+                                    opacity: 0.15; z-index: 0;
+                                    filter: brightness(0.6);"></div>
+
+                        <!-- Dark Overlay -->
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                                    background: #000;
+                                    z-index: 1;"></div>
+
+                        <!-- Content -->
+                        <div style="position: relative; z-index: 2; color: #fff;">
+                            <p
+                                style="font-family: var(--font-serif); font-size: 1.5rem; font-style: italic; margin-bottom: 1rem; line-height: 1.3; color: var(--accent-color);">
+                                "A arte é para consolar aqueles que são quebrados pela vida"
+                            </p>
+                            <p style="font-size: 0.85rem; margin-bottom: 1.5rem; opacity: 0.9; letter-spacing: 1px;">
+                                — Vincent van Gogh
+                            </p>
+
+                            <h3 style="font-size: 1.75rem; margin-bottom: 0.75rem; color: #fff; font-weight: 600;">
+                                Adquira Sua Obra de Arte
+                            </h3>
+                            <p
+                                style="margin-bottom: 1.5rem; font-size: 1rem; opacity: 0.95; max-width: 450px; margin-left: auto; margin-right: auto;">
+                                Transforme seu espaço com peças únicas que contam histórias e despertam emoções.
+                            </p>
+
+                            <a href="#portfolio" class="btn"
+                                style="display: inline-flex; align-items: center; gap: 10px; background: var(--accent-color); border-color: var(--accent-color); font-size: 1rem; padding: 1rem 2rem; color: #000; font-weight: 600;">
+                                <i class="fas fa-palette"></i>
+                                Explorar Coleção
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso!');">
+                    <input type="text" placeholder="Seu Nome Completo" required style="border: 1px solid #ddd;">
+                    <input type="email" placeholder="Seu Email" required style="border: 1px solid #ddd;">
+                    <input type="tel" placeholder="Seu Telefone (WhatsApp)" required style="border: 1px solid #ddd;">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <input type="text" placeholder="Cidade" required
+                            style="border: 1px solid #ddd; margin-bottom: 0 !important;">
+                        <select required style="border: 1px solid #ddd; margin-bottom: 0 !important;">
+                            <option value="">Estado</option>
+                            <option>SP</option>
+                            <option>RJ</option>
+                            <option>MG</option>
+                            <option>RS</option>
+                            <option>PR</option>
+                            <option>SC</option>
+                            <option>BA</option>
+                            <option>PE</option>
+                            <option>CE</option>
+                            <option>Outro</option>
+                        </select>
+                    </div>
+
+                    <select required style="border: 1px solid #ddd;">
+                        <option value="">Tipo de Interesse</option>
+                        <option>Compra de obra disponível</option>
+                        <option>Encomenda personalizada</option>
+                        <option>Consultoria artística</option>
+                        <option>Parceria/Exposição</option>
+                        <option>Outros assuntos</option>
+                    </select>
+
+                    <select style="border: 1px solid #ddd;">
+                        <option value="">Faixa de Investimento (Opcional)</option>
+                        <option>Até R$ 2.000</option>
+                        <option>R$ 2.000 - R$ 5.000</option>
+                        <option>R$ 5.000 - R$ 10.000</option>
+                        <option>Acima de R$ 10.000</option>
+                        <option>A definir</option>
+                    </select>
+
+                    <textarea placeholder="Conte-nos mais sobre seu interesse..." required
+                        style="border: 1px solid #ddd; min-height: 100px;"></textarea>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label
+                            style="font-size: 0.9rem; color: var(--text-light); display: block; margin-bottom: 0.75rem;">
+                            Preferência de Contato:
+                        </label>
+                        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="contact_pref" value="email" checked>
+                                <span style="font-size: 0.95rem;">Email</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="contact_pref" value="whatsapp">
+                                <span style="font-size: 0.95rem;">WhatsApp</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="contact_pref" value="phone">
+                                <span style="font-size: 0.95rem;">Telefone</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn"
+                        style="width: 100%; background: #000; border-color: #000; margin-top: 0.5rem;">Enviar
+                        Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter / News Section -->
+    <section class="section" style="background: #111; color: #fff; padding-bottom: 4rem;">
+        <div class="container">
+            <div class="text-center mb-3">
+                <h2 style="color: #fff; font-size: 2.5rem;">Fique Por Dentro</h2>
+                <p style="color: #ccc; max-width: 600px; margin: 0 auto;">Receba novidades sobre novas coleções,
+                    exposições e conteúdos exclusivos diretamente no seu email.</p>
+            </div>
+
+            <!-- Newsletter Form -->
+            <div style="max-width: 500px; margin: 0 auto 4rem; text-align: center;">
+                <form
+                    onsubmit="event.preventDefault(); alert('Obrigado por se inscrever! Você receberá nossas novidades em breve.'); this.reset();"
+                    style="display: flex; gap: 1rem;">
+                    <input type="email" placeholder="Seu melhor email" required
+                        style="flex: 1; padding: 1rem; border: none; background: rgba(255,255,255,0.1); color: #fff; font-size: 1rem;">
+                    <button type="submit" class="btn"
+                        style="background: var(--accent-color); border-color: var(--accent-color);">
+                        Inscrever
+                    </button>
+                </form>
+            </div>
+
+            <!-- Latest News Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <div
+                    style="background: rgba(255,255,255,0.05); padding: 2rem; border-left: 3px solid var(--accent-color);">
+                    <span
+                        style="color: var(--accent-color); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Exposição</span>
+                    <h3 style="color: #fff; margin: 1rem 0; font-size: 1.3rem;">Bienal de Arte Digital 2024</h3>
+                    <p style="color: #aaa; font-size: 0.95rem;">Nossas obras estarão em destaque na exposição
+                        internacional de Nova York em Setembro.</p>
+                </div>
+
+                <div
+                    style="background: rgba(255,255,255,0.05); padding: 2rem; border-left: 3px solid var(--accent-color);">
+                    <span
+                        style="color: var(--accent-color); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Nova
+                        Coleção</span>
+                    <h3 style="color: #fff; margin: 1rem 0; font-size: 1.3rem;">Série "Ethereal" Lançada</h3>
+                    <p style="color: #aaa; font-size: 0.95rem;">Explore as novas peças que mesclam abstração e realismo
+                        digital em formas nunca vistas.</p>
+                </div>
+
+                <div
+                    style="background: rgba(255,255,255,0.05); padding: 2rem; border-left: 3px solid var(--accent-color);">
+                    <span
+                        style="color: var(--accent-color); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Workshop</span>
+                    <h3 style="color: #fff; margin: 1rem 0; font-size: 1.3rem;">Masterclass de Arte Digital</h3>
+                    <p style="color: #aaa; font-size: 0.95rem;">Vagas limitadas para o workshop exclusivo sobre técnicas
+                        avançadas de composição digital.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <span class="footer-logo">Studio<span>Arte</span></span>
+                    <p style="color: #666;">Arte visual contemporânea para ambientes únicos.</p>
+                </div>
+                <ul class="footer-links">
+                    <li><strong>Navegação</strong></li>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#portfolio">Portfólio</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+                <ul class="footer-links">
+                    <li><strong>Social</strong></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Behance</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                &copy; 2024 Studio Arte. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('detailModal')"><i class="fas fa-times"></i></button>
+            <div id="detailContent" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="close-modal" onclick="closeModal('cartModal')"><i class="fas fa-times"></i></button>
+            <div style="padding: 2rem;">
+                <h2 class="mb-2">Seu Carrinho</h2>
+                <div id="cartItems" style="max-height: 400px; overflow-y: auto; margin-bottom: 2rem;">
+                    <!-- JS -->
+                </div>
+                <div style="border-top: 1px solid #eee; padding-top: 1rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 1.5rem;">
+                        <span>Total:</span>
+                        <span id="cartTotalValue">R$ 0,00</span>
+                    </div>
+                    <button class="btn" onclick="checkout()"
+                        style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <i class="fab fa-whatsapp"></i> Finalizar Compra no WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* Data */
+        const artworks = [
+            { id: 1, ref: "ART-001", title: "Abstração Etérea", category: "digital", price: 3500, status: "available", image: "https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=1000&auto=format&fit=crop", desc: "Uma exploração das formas intangíveis do pensamento." },
+            { id: 2, ref: "ART-002", title: "Concreto Urbano", category: "print", price: 1200, status: "available", image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=1000&auto=format&fit=crop", desc: "A dureza da cidade suavizada pela luz da manhã." },
+            { id: 3, ref: "ART-003", title: "Fluxo Digital", category: "digital", price: 2800, status: "sold", image: "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=1000&auto=format&fit=crop", desc: "Dados visualizados como rios de informação." },
+            { id: 4, ref: "ART-004", title: "Silêncio da Cor", category: "print", price: 1800, status: "available", image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1000&auto=format&fit=crop", desc: "O impacto do minimalismo cromático." },
+            { id: 5, ref: "ART-005", title: "Metamorfose", category: "digital", price: 4200, status: "available", image: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=1000&auto=format&fit=crop", desc: "A mudança constante da natureza digital." },
+            { id: 6, ref: "ART-006", title: "Horizonte", category: "print", price: 1500, status: "available", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop", desc: "Onde o céu encontra a imaginação." },
+            { id: 7, ref: "ART-007", title: "Neon Dreams", category: "digital", price: 3100, status: "available", image: "https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=1000&auto=format&fit=crop", desc: "Sonhos iluminados por luz artificial." },
+            { id: 8, ref: "ART-008", title: "Geometria Sagrada", category: "digital", price: 5000, status: "available", image: "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=1000&auto=format&fit=crop", desc: "Padrões matemáticos na arte." }
+        ];
+
+        /* State */
+        let cart = [];
+        let currentPage = 1;
+        const itemsPerPage = 6;
+        let currentFilter = 'all';
+
+        /* Carousel Logic */
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const track = document.getElementById('carouselTrack');
+        const dotsContainer = document.getElementById('carouselDots');
+
+        function createDots() {
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('carousel-dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    updateCarousel();
+                });
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        createDots();
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateCarousel();
+        }, 5000);
+
+        /* Gallery Logic */
+        function formatPrice(price) {
+            return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function filterGallery(category) {
+            currentFilter = category;
+            currentPage = 1;
+            renderGallery();
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            const pagination = document.getElementById('pagination');
+
+            let filtered = artworks;
+            if (currentFilter !== 'all') {
+                if (currentFilter === 'available') filtered = artworks.filter(a => a.status === 'available');
+                else filtered = artworks.filter(a => a.category === currentFilter);
+            }
+
+            // Pagination Slice
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageItems = filtered.slice(start, end);
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+            // Render Items
+            grid.innerHTML = pageItems.map(item => `
+                <div class="artwork-card" onclick="openDetail(${item.id})">
+                    <div class="img-wrapper">
+                        <img src="${item.image}" class="artwork-img" alt="${item.title}">
+                        <div class="artwork-overlay">
+                            <span class="btn">Ver Detalhes</span>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <div class="card-meta">
+                            <span>${item.category}</span>
+                            <span>${item.status === 'available' ? 'Disponível' : 'Vendida'}</span>
+                        </div>
+                        <h3>${item.title}</h3>
+                        <p class="card-price">${item.status === 'available' ? formatPrice(item.price) : 'Sold'}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Pagination
+            if (totalPages > 1) {
+                let paginationHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHTML += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+                }
+                pagination.innerHTML = paginationHTML;
+            } else {
+                pagination.innerHTML = '';
+            }
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            renderGallery();
+            document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* Modal & Cart */
+        function openDetail(id) {
+            const item = artworks.find(a => a.id === id);
+            const modal = document.getElementById('detailModal');
+            const content = document.getElementById('detailContent');
+
+            const isInCart = cart.some(c => c.id === id);
+
+            content.innerHTML = `
+                <img src="${item.image}" style="width:100%; height:400px; object-fit:cover; border-radius:4px;">
+                <div style="display:flex; flex-direction:column; justify-content:center;">
+                    <h2 class="mb-1">${item.title}</h2>
+                    <p style="color:#888; margin-bottom:1rem;">Ref: ${item.ref} | ${item.category.toUpperCase()}</p>
+                    <p class="mb-2">${item.desc}</p>
+                    <h3 class="mb-2" style="color:var(--secondary-color);">${formatPrice(item.price)}</h3>
+                    
+                    ${item.status === 'available' ? `
+                        <button class="btn mb-1" onclick="addToCart(${item.id})" ${isInCart ? 'disabled style="opacity:0.6"' : ''}>
+                            ${isInCart ? 'Adicionado ao Carrinho' : 'Adicionar ao Carrinho'}
+                        </button>
+                        <button class="btn btn-outline" onclick="window.location.href='https://wa.me/5511999999999?text=Gostaria de falar sobre a obra ${item.title}'">
+                            Falar com Artista
+                        </button>
+                    ` : '<button class="btn" disabled style="background:#ccc; border-color:#ccc;">Obra Indisponível</button>'}
+                </div>
+            `;
+
+            // Adjust for mobile in JS
+            if (window.innerWidth <= 768) {
+                content.style.gridTemplateColumns = '1fr';
+            }
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function addToCart(id) {
+            const item = artworks.find(a => a.id === id);
+            if (!cart.some(c => c.id === id)) {
+                cart.push(item);
+                updateCartUI();
+                alert(`${item.title} adicionado!`);
+                closeModal('detailModal');
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cartBadge').innerText = cart.length;
+            document.getElementById('cartBadge').classList.toggle('visible', cart.length > 0);
+
+            const cartList = document.getElementById('cartItems');
+            let total = 0;
+
+            cartList.innerHTML = cart.map(item => {
+                total += item.price;
+                return `
+                    <div style="display:flex; gap:1rem; margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid #eee;">
+                        <img src="${item.image}" style="width:60px; height:60px; object-fit:cover;">
+                        <div style="flex:1;">
+                            <h4>${item.title}</h4>
+                            <p>${formatPrice(item.price)}</p>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" style="background:none; border:none; color:red; cursor:pointer;">Remover</button>
+                    </div>
+                `;
+            }).join('');
+
+            if (cart.length === 0) cartList.innerHTML = "<p>Seu carrinho está vazio.</p>";
+            document.getElementById('cartTotalValue').innerText = formatPrice(total);
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'block';
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+
+            let total = 0;
+            let msg = "Olá! Gostaria de finalizar o pedido das seguintes obras:\n\n";
+            cart.forEach(item => {
+                msg += `- *${item.title}* (Ref: ${item.ref}): ${formatPrice(item.price)}\n`;
+                total += item.price;
+            });
+            msg += `\n*Total: ${formatPrice(total)}*`;
+            msg += "\n\nAguardo instruções de pagamento.";
+
+            window.open(`https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGallery();
+        });
+
+        // Window click to close modals
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>
